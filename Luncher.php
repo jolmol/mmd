@@ -163,9 +163,9 @@ $pmembersid= explode("\n",$txxt);
 
         }
     }else if ($text == "Version") {
-      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>SudoPv</b>
+      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>PayamResanSaz</b>
 <b>ver 1.0</b>
-<code>Coded By</code> @Sudo_TM
+<code>Coded By</code> @XdeveloperX
 Copy Right 2016©","parse_mode"=>"html"));
     }
     else if ($matches[0] == "/update"&& strpos($matches[1], ":")) {
