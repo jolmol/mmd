@@ -124,19 +124,21 @@ function processMessage($message) {
     $matches = explode(' ', $text);
     $substr = substr($text, 0,7 );
     if (strpos($text, "/start") === 0) {
-        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'درود دوست عزیز 😃👋
+        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'خوش امدید 😃👋
 
-⚙ برای ساخت ربات پیام رسان توکن ربات خود را از @botfather دریافت کرده و آن را برای ما ارسال کنید. ⚙
+ برای ساخت ربات پیام رسان توکن ربات خود را از @botfather دریافت کرده و آن را برای ما ارسال کنید. 
 
 به عنوان مثال :
 `123456789:ABCDE1FGHIJ5KLMNO5PQRS`
 
 
-به ربات ما امتیاز دهید  👈        [⭐️SudoPV⭐️](https://telegram.me/storebot?start=SudoPV_Bot) 👉
+به ربات ما امتیاز دهید  👈        [PayamResanSaz](https://telegram.me/storebot?start=PayamResanSazRoBot) 👉
 
-⚠️ هر نفر = فقط یک ربات ⚠️
-
-❤️ با تشکر ❤️
+ 
+🔰 هر نفر = فقط یک ربات 🔰
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX
 🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
@@ -224,10 +226,10 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvs-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
-⚙ برای ورود به ربات خود کلیک کنید ⚙
-✌ به ربات ما امتیاز دهید ✌
- https://telegram.me/storebot?start=SudoPV_Bot
-.";
+ برای ورود به ربات خود کلیک کنید 
+ به ربات ما امتیاز دهید 
+ https://telegram.me/storebot?start=PayamResanSazRoBot
+";
     
     $bot_url    = "https://api.telegram.org/bot284008451:AAEcPT9F7Z9npFf2tKyJFU4mCTL7womOMOw/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
@@ -255,11 +257,12 @@ $output = curl_exec($ch);
 
       }
       else{
-         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "⚠️ اخطار : شما قبلا یک ربات ثبت کرده اید ⚠️
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "  شما قبلا یک ربات ثبت کرده اید
 
 🔰 هر نفر = فقط یک ربات 🔰
-
-❤️ با تشکر ❤️"));
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX"));
       }
     }
       
@@ -306,10 +309,10 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvs-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
-⚙ برای ورود به ربات خود کلیک کنید ⚙
-✌ به ربات ما امتیاز دهید ✌
- https://telegram.me/storebot?start=SudoPV_Bot
-.";
+ برای ورود به ربات خود کلیک کنید 
+ به ربات ما امتیاز دهید 
+ https://telegram.me/storebot?start=PayamResanSazRoBot
+";
     
     $bot_url    = "https://api.telegram.org/bot284008451:AAEcPT9F7Z9npFf2tKyJFU4mCTL7womOMOw/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
@@ -332,11 +335,12 @@ $output = curl_exec($ch);
   
       }
       else{
-         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "⚠️ اخطار : شما قبلا یک ربات ثبت کرده اید ⚠️
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "  شما قبلا یک ربات ثبت کرده اید
 
 🔰 هر نفر = فقط یک ربات 🔰
-
-❤️ با تشکر ❤️"));
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX"));
       }
 
     }
