@@ -124,20 +124,20 @@ function processMessage($message) {
     $matches = explode(' ', $text);
     $substr = substr($text, 0,7 );
     if (strpos($text, "/start") === 0) {
-        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'ط¯ط±ظˆط¯ ط¯ظˆط³طھ ط¹ط²غŒط² ًںکƒًں‘‹
+        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'درود دوست عزیز 😃👋
 
-âڑ™ ط¨ط±ط§غŒ ط³ط§ط®طھ ط±ط¨ط§طھ ظ¾غŒط§ظ… ط±ط³ط§ظ† طھظˆع©ظ† ط±ط¨ط§طھ ط®ظˆط¯ ط±ط§ ط§ط² @botfather ط¯ط±غŒط§ظپطھ ع©ط±ط¯ظ‡ ظˆ ط¢ظ† ط±ط§ ط¨ط±ط§غŒ ظ…ط§ ط§ط±ط³ط§ظ„ ع©ظ†غŒط¯. âڑ™
+⚙ برای ساخت ربات پیام رسان توکن ربات خود را از @botfather دریافت کرده و آن را برای ما ارسال کنید. ⚙
 
-ط¨ظ‡ ط¹ظ†ظˆط§ظ† ظ…ط«ط§ظ„ :
+به عنوان مثال :
 `123456789:ABCDE1FGHIJ5KLMNO5PQRS`
 
 
-ط¨ظ‡ ط±ط¨ط§طھ ظ…ط§ ط§ظ…طھغŒط§ط² ط¯ظ‡غŒط¯  ًں‘ˆ        [â­گï¸ڈSudoPVâ­گï¸ڈ](https://telegram.me/storebot?start=SudoPV_Bot) ًں‘‰
+به ربات ما امتیاز دهید  👈        [⭐️SudoPV⭐️](https://telegram.me/storebot?start=SudoPV_Bot) 👉
 
-âڑ ï¸ڈ ظ‡ط± ظ†ظپط± = ظپظ‚ط· غŒع© ط±ط¨ط§طھ âڑ ï¸ڈ
+⚠️ هر نفر = فقط یک ربات ⚠️
 
-â‌¤ï¸ڈ ط¨ط§ طھط´ع©ط± â‌¤ï¸ڈ
-ًں¤– ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
+❤️ با تشکر ❤️
+🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
 $txxt = file_get_contents('pmembers.txt');
@@ -157,14 +157,14 @@ $pmembersid= explode("\n",$txxt);
         $part = explode("\n",$tokens);
        $tcount =  count($part)-1;
 
-      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id,  "text" => "طھط¹ط¯ط§ط¯ ظ‡ظ…ظ‡ ط±ط¨ط§طھ ظ‡ط§غŒ ط¢ظ†ظ„ط§غŒظ† :  <code>".$tcount."</code>","parse_mode"=>"HTML"));
+      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id,  "text" => "تعداد همه ربات های آنلاین :  <code>".$tcount."</code>","parse_mode"=>"HTML"));
 
         }
     }else if ($text == "Version") {
       apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>SudoPv</b>
 <b>ver 1.0</b>
 <code>Coded By</code> @Sudo_TM
-Copy Right 2016آ©","parse_mode"=>"html"));
+Copy Right 2016©","parse_mode"=>"html"));
     }
     else if ($matches[0] == "/update"&& strpos($matches[1], ":")) {
       
@@ -176,10 +176,10 @@ Copy Right 2016آ©","parse_mode"=>"html"));
       mkdir($id, 0700);
        file_put_contents($id.'/banlist.txt',"");
       file_put_contents($id.'/pmembers.txt',"");
-      file_put_contents($id.'/msgs.txt',"ط¯ط±ظˆط¯ ًںکƒًں‘‹
-ظ¾غŒط§ظ… ط®ظˆط¯ ط±ط§ ط§ط±ط³ط§ظ„ ع©ظ†غŒط¯.
+      file_put_contents($id.'/msgs.txt',"درود 😃👋
+پیام خود را ارسال کنید.
 -!-@-#-$
-ًں—£ظ¾غŒط§ظ… ط§ط±ط³ط§ظ„ ط´ط¯");
+🗣پیام ارسال شد");
         file_put_contents($id.'/booleans.txt',"false");
         $phptext = file_get_contents('phptext.txt');
         $phptext = str_replace("**TOKEN**",$matches[1],$phptext);
@@ -187,14 +187,14 @@ Copy Right 2016آ©","parse_mode"=>"html"));
         file_put_contents($id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[1].'$texttwebhook?url=');
         file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvs-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
-apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "ًںڑ€ ط±ط¨ط§طھ ط¨ط§ ظ…ظ€ظˆظپظ‚غŒطھ ط¢ظ¾ط¯غŒطھ ط´ط¯ â™»ï¸ڈ"));
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🚀 ربات با مـوفقیت آپدیت شد ♻️"));
 
 
     }
     }
     else if ($matches[0] != "/update"&& $matches[1]==""&&$chat_id != 193930120) {
       if (strpos($text, ":")) {
-apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "ًں”ƒ ط¯ط±ط­ط§ظ„ ط¨ط±ط³غŒ طھظˆع©ظ† ط´ظ…ط§ ًں”ƒ"));
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحال برسی توکن شما 🔃"));
     $url = "http://api.telegram.org/bot".$matches[0]."/getme";
     $json = file_get_contents($url);
     $json_data = json_decode($json, true);
@@ -223,9 +223,9 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "ًں”ƒ ط¯
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvs-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
-    $unstalled = "ًں”° ط±ط¨ط§طھ ط´ظ…ط§ ط¨ط§ ظ…ظˆظپظ‚غŒطھ ظ†طµط¨ ط´ط¯ ًں”° 
-âڑ™ ط¨ط±ط§غŒ ظˆط±ظˆط¯ ط¨ظ‡ ط±ط¨ط§طھ ط®ظˆط¯ ع©ظ„غŒع© ع©ظ†غŒط¯ âڑ™
-âœŒ ط¨ظ‡ ط±ط¨ط§طھ ظ…ط§ ط§ظ…طھغŒط§ط² ط¯ظ‡غŒط¯ âœŒ
+    $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
+⚙ برای ورود به ربات خود کلیک کنید ⚙
+✌ به ربات ما امتیاز دهید ✌
  https://telegram.me/storebot?start=SudoPV_Bot
 .";
     
@@ -255,20 +255,20 @@ $output = curl_exec($ch);
 
       }
       else{
-         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "âڑ ï¸ڈ ط§ط®ط·ط§ط± : ط´ظ…ط§ ظ‚ط¨ظ„ط§ غŒع© ط±ط¨ط§طھ ط«ط¨طھ ع©ط±ط¯ظ‡ ط§غŒط¯ âڑ ï¸ڈ
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "⚠️ اخطار : شما قبلا یک ربات ثبت کرده اید ⚠️
 
-ًں”° ظ‡ط± ظ†ظپط± = ظپظ‚ط· غŒع© ط±ط¨ط§طھ ًں”°
+🔰 هر نفر = فقط یک ربات 🔰
 
-â‌¤ï¸ڈ ط¨ط§ طھط´ع©ط± â‌¤ï¸ڈ"));
+❤️ با تشکر ❤️"));
       }
     }
       
     else{
-          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "â‌Œ طھظˆع©ظ† ظˆط§ط±ط¯ ط´ط¯ظ‡ ظ†ط§ظ…ط¹طھط¨ط± ظ…غŒ ط¨ط§ط´ط¯ â‌Œ"));
+          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
     }
 }
 else{
-            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "â‌Œ طھظˆع©ظ† ظˆط§ط±ط¯ ط´ط¯ظ‡ ظ†ط§ظ…ط¹طھط¨ط± ظ…غŒ ط¨ط§ط´ط¯ â‌Œ"));
+            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
 
 }
 
@@ -277,7 +277,7 @@ else{
         if (strpos($text, ":")) {
           
           
-apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "ًں”ƒ ط¯ط±ط­ط§ظ„ ط¨ط±ط³غŒ طھظˆع©ظ† ط´ظ…ط§ ًں”ƒ"));
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحال برسی توکن شما 🔃"));
     $url = "http://api.telegram.org/bot".$matches[0]."/getme";
     $json = file_get_contents($url);
     $json_data = json_decode($json, true);
@@ -305,9 +305,9 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "ًں”ƒ ط¯
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvs-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
-    $unstalled = "ًں”° ط±ط¨ط§طھ ط´ظ…ط§ ط¨ط§ ظ…ظˆظپظ‚غŒطھ ظ†طµط¨ ط´ط¯ ًں”° 
-âڑ™ ط¨ط±ط§غŒ ظˆط±ظˆط¯ ط¨ظ‡ ط±ط¨ط§طھ ط®ظˆط¯ ع©ظ„غŒع© ع©ظ†غŒط¯ âڑ™
-âœŒ ط¨ظ‡ ط±ط¨ط§طھ ظ…ط§ ط§ظ…طھغŒط§ط² ط¯ظ‡غŒط¯ âœŒ
+    $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
+⚙ برای ورود به ربات خود کلیک کنید ⚙
+✌ به ربات ما امتیاز دهید ✌
  https://telegram.me/storebot?start=SudoPV_Bot
 .";
     
@@ -332,34 +332,34 @@ $output = curl_exec($ch);
   
       }
       else{
-         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "âڑ ï¸ڈ ط§ط®ط·ط§ط± : ط´ظ…ط§ ظ‚ط¨ظ„ط§ غŒع© ط±ط¨ط§طھ ط«ط¨طھ ع©ط±ط¯ظ‡ ط§غŒط¯ âڑ ï¸ڈ
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "⚠️ اخطار : شما قبلا یک ربات ثبت کرده اید ⚠️
 
-ًں”° ظ‡ط± ظ†ظپط± = ظپظ‚ط· غŒع© ط±ط¨ط§طھ ًں”°
+🔰 هر نفر = فقط یک ربات 🔰
 
-â‌¤ï¸ڈ ط¨ط§ طھط´ع©ط± â‌¤ï¸ڈ"));
+❤️ با تشکر ❤️"));
       }
 
     }
     else{
-          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "â‌Œ طھظˆع©ظ† ظˆط§ط±ط¯ ط´ط¯ظ‡ ظ†ط§ظ…ط¹طھط¨ط± ظ…غŒ ط¨ط§ط´ط¯ â‌Œ"));
+          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
 
     }
 }
 else{
-            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "â‌Œ طھظˆع©ظ† ظˆط§ط±ط¯ ط´ط¯ظ‡ ظ†ط§ظ…ط¹طھط¨ط± ظ…غŒ ط¨ط§ط´ط¯ â‌Œ"));
+            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
 
 }
 
         } else if (strpos($text, "/stop") === 0) {
       // stop now
     } else {
-      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $message_id, "text" => 'â‌Œ ط¯ط³طھظˆط± ظ†ط§ظ…ط¹طھط¨ط± â‌Œ 
-ًںŒ€ ط¨ط±ط§غŒ ط±ط§ظ‡ظ†ظ…ط§غŒغŒ /start ط±ط§ ط¨ط²ظ†غŒط¯ ًںŒ€
+      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $message_id, "text" => '❌ دستور نامعتبر ❌ 
+🌀 برای راهنمایی /start را بزنید 🌀
 .'));
     }
   } else {
-    apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'â‌Œ ط¯ط³طھظˆط± ظ†ط§ظ…ط¹طھط¨ط± â‌Œ 
-ًںŒ€ ط¨ط±ط§غŒ ط±ط§ظ‡ظ†ظ…ط§غŒغŒ /start ط±ط§ ط¨ط²ظ†غŒط¯ ًںŒ€
+    apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => '❌ دستور نامعتبر ❌ 
+🌀 برای راهنمایی /start را بزنید 🌀
 .'));
   }
 }
