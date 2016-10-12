@@ -151,7 +151,7 @@ function processMessage($message) {
     if (strpos($text, "/start") === 0) {
       apiRequestJson("sendMessage", array('chat_id' => $chat_id, "text" => "سلام خوش آمدید به ربات بازی ایکس او برای اجرای  بازی ابتدا برروی دکمه بازی xo کلیک نمایید وسپس دوست خودرا جهت بازی انتخاب نمایید .", 'reply_markup' => array(
             "inline_keyboard"=>array(
-			    array(array("text"=>"توسعه دهنده","url"=>"https://telegram.me/@Abmwn")),
+			    array(array("text"=>"ربات ایکس اوساز","url"=>"https://telegram.me/XoCreator_Bot")),
 			    array(array("text"=>"بازی XO","switch_inline_query"=>md5(date("YMDms"))),array("text"=>"⬅️⬅️⬅️","callback_data"=>"m"))
 			)
 		)));
