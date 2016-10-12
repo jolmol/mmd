@@ -1,465 +1,393 @@
 <?php
-define('API_KEY', '276874700:AAHELRWZx3UcykHXP8kUFTxIYfd9xHQKr74');
-$admin = '208094932';
-function api($method,$datas=[]){
-    $url = "https://api.telegram.org/bot".API_KEY."/".$method;
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$datas);
-    $res = curl_exec($ch);
-    if(curl_error($ch)){
-        var_dump(curl_error($ch));
-    }else{
-        return json_decode($res);
-    }
-}
-/*function apipwd($method,$datas=[]){
-    $url = "https://api.pwrtelegram.xyz/bot".API_KEY."/".$method;
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$datas);
-    $res = curl_exec($ch);
-    if(curl_error($ch)){
-        var_dump(curl_error($ch));
-    }else{
-        return json_decode($res);
-    }
-}*/
-function req($url){
-  $res = file_get_contents($url);
-  return json_decode($res);
-}
-function curl($url) {
-	$ch = curl_init();
-	$timeout = 5;
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-	$data = curl_exec($ch);
-	curl_close($ch);
-	return $data;
-}
-function r($command,$text){
-  $i = str_replace("$command","",$text);
-  return str_replace(" ","",$i);
+
+define('BOT_TOKEN', '276543110:AAHQj--1EiFOHS7Hpsuz8eglfHTv44EEiKQ');
+define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+
+function apiRequestWebhook($method, $parameters) {
+  if (!is_string($method)) {
+    error_log("Method name must be a string\n");
+    return false;
+  }
+
+  if (!$parameters) {
+    $parameters = array();
+  } else if (!is_array($parameters)) {
+    error_log("Parameters must be an array\n");
+    return false;
+  }
+
+  $parameters["method"] = $method;
+
+  header("Content-Type: application/json");
+  echo json_encode($parameters);
+  return true;
 }
 
-$server = "dbsserver";
-$username = "usernamedb";
-$password = "passworddb";
-$dbs = "databasename";
-$db = new mysqli($server, $username, $password, $dbs);
-$content = file_get_contents("php://input");
-$u = json_decode($content, true);
-$from = $u['message']['from']['id'];
-$banlist = $db->query('SELECT id FROM ban WHERE id='.$from);
-if($u['message']['text'] and $banlist->num_rows == 0){
-  $msg = $u['message']['message_id'];
-  $text = $u['message']['text'];
-  $chat_id = $u['message']['chat']['id'];
-  if($text == '/start' or $text == '/help' or $text == '/help@Arrow_robot'){
-    $check = $db->query('SELECT id FROM member WHERE id='.$chat_id);
-    if($check->num_rows == 0){
-      $db->query('INSERT INTO member (id) VALUES ('.$chat_id.')');
+function exec_curl_request($handle) {
+  $response = curl_exec($handle);
+
+  if ($response === false) {
+    $errno = curl_errno($handle);
+    $error = curl_error($handle);
+    error_log("Curl returned error $errno: $error\n");
+    curl_close($handle);
+    return false;
+  }
+
+  $http_code = intval(curl_getinfo($handle, CURLINFO_HTTP_CODE));
+  curl_close($handle);
+
+  if ($http_code >= 500) {
+    // do not wat to DDOS server if something goes wrong
+    sleep(10);
+    return false;
+  } else if ($http_code != 200) {
+    $response = json_decode($response, true);
+    error_log("Request has failed with error {$response['error_code']}: {$response['description']}\n");
+    if ($http_code == 401) {
+ throw new Exception('Invalid access token provided');
     }
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"
-Hello I'm Arrow
+    return false;
+  } else {
+    $response = json_decode($response, true);
+    if (isset($response['description'])) {
+      error_log("Request was successfull: {$response['description']}\n");
+    }
+    $response = $response['result'];
+  }
 
-Commands :
+  return $response;
+}
 
-<b>1</b>> /help
-<b>2</b>> /echo [text]
-<b>3</b>> /ip [URL|ip]
-<b>4</b>> /imdb [name]
-<b>5</b>> /spotify [name track]
-<b>6</b>> /qr [text]
-<b>7</b>> /translate [text]      #text to fa
-<b>8</b>> /loc [name City]
-<b>9</b>> /calc [expression]
-<b>10</b>> /cat
-<b>11</b>> /tosticker     #by_reply
-<b>12</b>> /tophoto       #by_reply
-      ",
-      'parse_mode'=>'HTML',
-      'reply_markup'=>json_encode(array(
-        'inline_keyboard'=>array(
-          array(
-            array('text'=>'Creator','url'=>'https://telegram.me/negative'),
-            array('text'=>'Channel','url'=>'https://telegram.me/taylor_team')
-          ),
-          array(
-            array('text'=>'فارسی 🇮🇷','callback_data'=>'fa')
-          )
-        )
-      ))
-    ));
+function apiRequest($method, $parameters) {
+  if (!is_string($method)) {
+    error_log("Method name must be a string\n");
+    return false;
   }
-  elseif(preg_match('/^\/([Ee]cho) (.*)/s',$text)){
-    preg_match('/^\/([Ee]cho) (.*)/s',$text,$match);
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>$match[2].'',
-      'parse_mode'=>'HTML'
-    ));
+
+  if (!$parameters) {
+    $parameters = array();
+  } else if (!is_array($parameters)) {
+    error_log("Parameters must be an array\n");
+    return false;
   }
-  elseif(preg_match('/^\/([Ii]p) (.*)/',$text)){
-    preg_match('/^\/([Ii]p) (.*)/s',$text,$match);
-    $txt = urlencode($match[2]);
-    $res = json_decode(file_get_contents('http://api.ipinfodb.com/v3/ip-city/?key=bd36e5c11b78ac040a0858df1df61b3ac9fe6d1717bfe073690617557dd9dc42&ip='.$txt.'&format=json'));
-    api('sendLocation',array('chat_id'=>$chat_id,'latitude'=>$res->latitude,'longitude'=>$res->longitude));
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"ip : <code>".$res->ipAddress."</code>\nCountry : <b>".$res->countryCode." - ".$res->countryName."</b>",
-      'parse_mode'=>'HTML'
-    ));
+
+  foreach ($parameters as $key => &$val) {
+    // encoding to JSON array parameters, for example reply_markup
+    if (!is_numeric($val) && !is_string($val)) {
+      $val = json_encode($val);
+    }
   }
-  elseif(preg_match('/^\/([Ii]mdb) (.*)/s',$text)){
-    preg_match('/^\/([Ii]mdb) (.*)/s',$text,$match);
-    $txt = urlencode($match[2]);
-    $rs = json_decode(file_get_contents('http://www.omdbapi.com/?t='.$txt));
-    if(!$rs->Error){
-      api('sendMessage',array(
-        'chat_id'=>$chat_id,
-        'text'=>"<b>Title</b> : ".$rs->Title."\n\n<b>Year</b> : ".$rs->Year."\n<b>Runtime</b> : ".$rs->Runtime."\n<b>Language</b> : ".$rs->Language,
-        'parse_mode'=>'HTML'
-      ));
-      if($rs->Poster){
-        file_put_contents('poster.jpg',file_get_contents($rs->Poster));
-        api('sendSticker',array(
-          'chat_id'=>$chat_id,
-          'sticker'=>new CURLFile('poster.jpg')
-        ));
+  $url = API_URL.$method.'?'.http_build_query($parameters);
+
+  $handle = curl_init($url);
+  curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
+  curl_setopt($handle, CURLOPT_TIMEOUT, 60);
+
+  return exec_curl_request($handle);
+}
+
+function apiRequestJson($method, $parameters) {
+  if (!is_string($method)) {
+ error_log("Method name must be a string\n");
+    return false;
+  }
+
+  if (!$parameters) {
+    $parameters = array();
+  } else if (!is_array($parameters)) {
+    error_log("Parameters must be an array\n");
+    return false;
+  }
+
+  $parameters["method"] = $method;
+
+  $handle = curl_init(API_URL);
+  curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
+  curl_setopt($handle, CURLOPT_TIMEOUT, 60);
+  curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($parameters));
+  curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+
+  return exec_curl_request($handle);
+}
+
+function processMessage($message) {
+  // process incoming message
+  $message_id = $message['message_id'];
+  $chat_id = $message['chat']['id'];
+  if (isset($message['text'])) {
+    // incoming text message
+    $text = $message['text'];
+    $admin = 193930120;
+    $matches = explode(' ', $text);
+    $substr = substr($text, 0,7 );
+    if (strpos($text, "/start") === 0) {
+        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'خوش امدید 😃👋
+
+ برای ساخت ربات پیام رسان توکن ربات خود را از @botfather دریافت کرده و آن را برای ما ارسال کنید. 
+
+به عنوان مثال :
+`123456789:ABCDE1FGHIJ5KLMNO5PQRS`
+
+
+به ربات ما امتیاز دهید  👈        [PayamResanSaz](https://telegram.me/storebot?start=PayamResanSazRoBot) 👉
+
+ 
+🔰 هر نفر = فقط یک ربات 🔰
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX
+🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
+
+
+$txxt = file_get_contents('pmembers.txt');
+$pmembersid= explode("\n",$txxt);
+	if (!in_array($chat_id,$pmembersid)) {
+		$aaddd = file_get_contents('pmembers.txt');
+		$aaddd .= $chat_id."
+";
+    	file_put_contents('pmembers.txt',$aaddd);
+}
+        if($chat_id == 193930120)
+        {
+          if(!file_exists('tokens.txt')){
+        file_put_contents('tokens.txt',"");
+           }
+        $tokens = file_get_contents('tokens.txt');
+        $part = explode("\n",$tokens);
+       $tcount =  count($part)-1;
+
+      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id,  "text" => "تعداد همه ربات های آنلاین :  <code>".$tcount."</code>","parse_mode"=>"HTML"));
+
+        }
+    }else if ($text == "Version") {
+      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>PayamResanSaz</b>
+<b>ver 1.0</b>
+<code>Coded By</code> @XdeveloperX
+Copy Right 2016©","parse_mode"=>"html"));
+    }
+    else if ($matches[0] == "/update"&& strpos($matches[1], ":")) {
+      
+    $txtt = file_get_contents('tokenstoupdate.txt');
+		$banid= explode("\n",$txtt);
+		$id=$chat_id;
+    if (in_array($matches[1],$banid)) {
+      rmdir($chat_id);
+      mkdir($id, 0700);
+       file_put_contents($id.'/banlist.txt',"");
+      file_put_contents($id.'/pmembers.txt',"");
+      file_put_contents($id.'/msgs.txt',"درود 😃👋
+پیام خود را ارسال کنید.
+-!-@-#-$
+🗣پیام ارسال شد");
+        file_put_contents($id.'/booleans.txt',"false");
+        $phptext = file_get_contents('phptext.txt');
+        $phptext = str_replace("**TOKEN**",$matches[1],$phptext);
+        $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
+        file_put_contents($id.'/pvresan.php',$phptext);
+        file_get_contents('https://api.telegram.org/bot'.$matches[1].'$texttwebhook?url=');
+        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://xos-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🚀 ربات با مـوفقیت آپدیت شد ♻️"));
+
+
+    }
+    }
+    else if ($matches[0] != "/update"&& $matches[1]==""&&$chat_id != 193930120) {
+      if (strpos($text, ":")) {
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحال برسی توکن شما 🔃"));
+    $url = "http://api.telegram.org/bot".$matches[0]."/getme";
+    $json = file_get_contents($url);
+    $json_data = json_decode($json, true);
+    $id = $chat_id;
+    
+   $txt = file_get_contents('lastmembers.txt');
+    $membersid= explode("\n",$txt);
+    
+    if($json_data["result"]["username"]!=null){
+      
+      if(file_exists($id)==false && in_array($chat_id,$membersid)==false){
+          
+
+        $aaddd = file_get_contents('tokens.txt');
+                $aaddd .= $text."
+";
+        file_put_contents('tokens.txt',$aaddd);
+
+     mkdir($id, 0700);
+        file_put_contents($id.'/banlist.txt',"");
+        file_put_contents($id.'/pmembers.txt',"");
+        file_put_contents($id.'/booleans.txt',"false");
+        $phptext = file_get_contents('phptext.txt');
+        $phptext = str_replace("**TOKEN**",$text,$phptext);
+        $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
+        file_put_contents($token.$id.'/pvresan.php',$phptext);
+        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
+        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://xos-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+    $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
+ برای ورود به ربات خود کلیک کنید 
+ به ربات ما امتیاز دهید 
+ https://telegram.me/storebot?start=PayamResanSazRoBot
+";
+    
+    $bot_url    = "https://api.telegram.org/bot276543110:AAHQj--1EiFOHS7Hpsuz8eglfHTv44EEiKQ/"; 
+    $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
+
+$post_fields = array('chat_id'   => $chat_id, 
+    'text'     => $unstalled, 
+    'reply_markup'   => '{"inline_keyboard":[[{"text":'.'"@'.$json_data["result"]["username"].'"'.',"url":'.'"'."http://telegram.me/".$json_data["result"]["username"].'"'.'}]]}' ,
+    'disable_web_page_preview'=>"true"
+); 
+
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_HTTPHEADER, array( 
+    "Content-Type:multipart/form-data" 
+)); 
+curl_setopt($ch, CURLOPT_URL, $url); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields); 
+
+$output = curl_exec($ch); 
+    
+    
+    
+
+
+
       }
-    }else{
-      api('sendMessage',array('chat_id'=>$chat_id,'text'=>"Movie not found!"));
+      else{
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "  شما قبلا یک ربات ثبت کرده اید
+
+🔰 هر نفر = فقط یک ربات 🔰
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX"));
+      }
     }
-  }
-  elseif(preg_match('/^\/([Ss]potify) (.*)/s',$text)){
-    preg_match('/^\/(spotify) (.*)/s',$text,$match);
-    $txt = urlencode($match[2]);
-    $rs = json_decode(file_get_contents('https://api.spotify.com/v1/search?limit=1&type=track&q='.$txt));
-    if($rs->tracks->items[0]->album->name){
-      api('sendMessage',array(
-        'chat_id'=>$chat_id,
-        'text'=>"<b>Artists Name</b> : ".$rs->tracks->items[0]->artists[0]->name."\n<b>Name</b> : ".$rs->tracks->items[0]->name."\n",
-        'parse_mode'=>'HTML'
-      ));
-      api('sendMessage',array('chat_id'=>$chat_id,'text'=>"Poster 😇👇"));
-      api('sendChatAction',array(
-        'chat_id'=>$chat_id,
-        'action'=>'upload_photo'
-      ));
-      file_put_contents('poster.jpg',file_get_contents($rs->tracks->items[0]->album->images[0]->url));
-      api('sendPhoto',array(
-        'chat_id'=>$chat_id,
-        'photo'=>new CURLFile('poster.jpg')
-      ));
-      api('sendChatAction',array(
-        'chat_id'=>$chat_id,
-        'action'=>"record_audio"
-      ));
-      file_put_contents('music.mp3',file_get_contents($rs->tracks->items[0]->preview_url));
-      $title = $rs->tracks->items[0]->name;
-      api('sendAudio',array(
-        'chat_id'=>$chat_id,
-        'audio'=>new CURLFile('music.mp3'),
-        'title'=>"$title"
-      ));
+      
+    else{
+          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
     }
-  }
-  elseif(preg_match('/^\/([q]r) (.*)/s',$text)){
-    preg_match('/^\/([q]r) (.*)/s',$text,$mtch);
-    $txt = urlencode($mtch[2]);
-    file_put_contents('poster.jpg',file_get_contents('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data='.$txt));
-    api('sendPhoto',array(
-      'chat_id'=>$chat_id,
-      'photo'=>new CURLFile('poster.jpg')
-    ));
-  }
-  elseif(preg_match('/^\/([t]ranslate) (.*)/s',$text)){
-    preg_match('/^\/([t]ranslate) (.*)/s',$mtch);
-    $txt = urlencode($mtch[2]);
-    $rs = json_decode(file_get_contents('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20160119T111342Z.fd6bf13b3590838f.6ce9d8cca4672f0ed24f649c1b502789c9f4687a&format=plain&lang=fa&text='.$txt));
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"".$rs->text[0],
-      'reply_to_message_id'=>$msg
-    ));
-  }
-  elseif(preg_match('/^\/([l]oc)/s',$text)){
-    preg_match('/^\/([l]oc)/s',$text,$mtch);
-    $txt = urlencode($mtch[2]);
-    $rs = json_decode(file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$txt));
-    $lat = $rs->results[0]->geometry->location->lat;
-    $lng = $rs->results[0]->geometry->location->lng;
-    api('sendLocation',array(
-      'chat_id'=>$chat_id,
-      'latitude'=>$lat,
-      'longitude'=>$lng
-    ));
-  }
-  elseif(preg_match('/^\/(calc) (.*)/s',$text)){
-    preg_match('/^\/(calc) (.*)/s',$text,$mtch);
-    $txt = urlencode($mtch[2]);
-    $rs = file_get_contents('http://api.mathjs.org/v1/?expr='.$txt);
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"<code>".$rs."</code>",
-      'parse_mode'=>'HTML'
-    ));
-  }
-  elseif(preg_match('/^\/(cat)/s',$text)){
-    file_put_contents('cat.jpg',file_get_contents('http://thecatapi.com/api/images/get?format=src&type=jpg'));
-    api('sendPhoto',array(
-      'chat_id'=>$chat_id,
-      'photo'=>new CURLFile('cat.jpg')
-    ));
-  }
-  elseif(preg_match('/^\/(bc) (.*)/s',$text) and $from == $admin){
-    preg_match('/^\/(bc) (.*)/s',$text,$mtch);
-    $txt = $mtch[2];
-    $select = $db->query('SELECT id FROM member');
-    while($rw = $select->fetch_assoc()){
-      api('sendMessage',array(
-        'chat_id'=>$rw['id'],
-        'text'=>"$txt",
-        'parse_mode'=>'HTML'
-      ));
-    }
-  }
-  elseif(preg_match('/^\/(ban) (.*)/s',$text) and $from == $admin){
-    preg_match('/^\/(ban) (.*)/s',$text,$mtch);
-    $txt = $mtch[2];
-    $select = $db->query('SELECT id FROM ban WHERE id='.$txt);
-    if($select->num_rows == 0){
-      $db->query('INSERT INTO ban (id) VALUES ('.$txt.')');
-    }
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"<b>Banned</b>",
-      'parse_mode'=>'HTML'
-    ));
-  }
-  elseif(preg_match('/^\/(unban) (.*)/s',$text) and $from == $admin){
-    preg_match('/^\/(unban) (.*)/s',$text,$mtch);
-    $txt = $mtch[2];
-    $select = $db->query('SELECT id FROM ban WHERE id='.$txt);
-    if($select->num_rows != 0){
-      $db->query('DELETE FROM ban WHERE id='.$txt);
-    }
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"<b>Unbanned</b>",
-      'parse_mode'=>'HTML'
-    ));
-  }
-  elseif(preg_match('/^\/([Ll]eave)/',$text) and $from == $admin){
-    api('leaveChat',array(
-      'chat_id'=>$chat_id
-    ));
-  }
-  elseif(preg_match('/^\/([Ss]tats)/',$text) and $from == $admin){
-    $chs = $db->query('SELECT id FROM member');
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"<b>Members : </b>".$chs->num_rows."\n",
-      'parse_mode'=>'HTML'
-    ));
-  }
-  elseif(preg_match('/^\/(reply) (.*)/s',$text) and $u['message']['reply_to_message']){
-    preg_match('/^\/(reply) (.*)/s',$text,$match);
-    $txt = $match[2];
-    $rpid = $u['message']['reply_to_message']['message_id'];
-    api('sendMessage',array(
-      'chat_id'=>$chat_id,
-      'text'=>"$txt",
-      'parse_mode'=>'HTML',
-      'reply_to_message_id'=>$rpid
-    ));
-  }
-  elseif(preg_match('/^\/(tosticker)/',$text) and $u['message']['reply_to_message']){
-    if($u['message']['reply_to_message']['photo'][3]){
-      $file = $u['message']['reply_to_message']['photo'][3]['file_id'];
-      $get = api('getfile',array('file_id'=>"$file"));
-      $patch = $get->result->file_path;
-      file_put_contents('sticker.png',file_get_contents('https://api.telegram.org/file/bot'.API_KEY.'/'.$patch));
-      api('sendSticker',array(
-        'chat_id'=>$chat_id,
-        'sticker'=>new CURLFile('sticker.png')
-      ));
-    }elseif($u['message']['reply_to_message']['photo'][2]){
-      $file = $u['message']['reply_to_message']['photo'][2]['file_id'];
-      $get = api('getfile',array('file_id'=>"$file"));
-      $patch = $get->result->file_path;
-      file_put_contents('sticker.png',file_get_contents('https://api.telegram.org/file/bot'.API_KEY.'/'.$patch));
-      api('sendSticker',array(
-        'chat_id'=>$chat_id,
-        'sticker'=>new CURLFile('sticker.png')
-      ));
-    }elseif($u['message']['reply_to_message']['photo'][1]){
-      $file = $u['message']['reply_to_message']['photo'][1]['file_id'];
-      $get = api('getfile',array('file_id'=>"$file"));
-      $patch = $get->result->file_path;
-      file_put_contents('sticker.png',file_get_contents('https://api.telegram.org/file/bot'.API_KEY.'/'.$patch));
-      api('sendSticker',array(
-        'chat_id'=>$chat_id,
-        'sticker'=>new CURLFile('sticker.png')
-      ));
-    }
-  }
-  elseif(preg_match('/^\/(tophoto)/',$text) and $u['message']['reply_to_message']){
-    if($u['message']['reply_to_message']['sticker']){
-      $file = $u['message']['reply_to_message']['sticker']['file_id'];
-      $get = api('getfile',array('file_id'=>"$file"));
-      $patch = $get->result->file_path;
-      file_put_contents('sticker.png',file_get_contents('https://api.telegram.org/file/bot'.API_KEY.'/'.$patch));
-      api('sendPhoto',array(
-        'chat_id'=>$chat_id,
-        'photo'=>new CURLFile('sticker.png')
-      ));
-    }
-  }
-  /*if($u['message']['new_chat_member']){
-    if($u['message']['from']['id'] != 68747297){
-      $idc = $u['message']['chat']['id'];
-      api('leaveChat',array(
-        'chat_id'=>$idc
-      ));
-    }
-  }*/
-}elseif($banlist->num_rows != 0){
-  api('sendMessage',array(
-    'chat_id'=>$u['message']['chat']['id'],
-    'text'=>"You Are Banned"
-  ));
 }
-if($u['callback_query']){
-  $id = $u['callback_query']['id'];
-  $chat_id = $u['callback_query']['message']['chat']['id'];
-  $msg = $u['callback_query']['message']['message_id'];
-  $data = $u['callback_query']['data'];
-  if($data == 'fa'){
-    api('editMessageText',array(
-      'chat_id'=>$chat_id,
-      'message_id'=>$msg,
-      'text'=>"
-سلام من ارو هستم
+else{
+            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
 
-دستورات :
+}
 
-<b>1</b>> /help
-<b>2</b>> /echo [متن]
-<b>3</b>> /ip [ادرس]
-<b>4</b>> /imdb [اسم]
-<b>5</b>> /spotify [نام ترک]
-<b>6</b>> /qr [متن]
-<b>7</b>> /translate [متن]
-<b>8</b>> /loc [نام شهر]
-<b>9</b>> /calc [expression]
-<b>10</b>> /cat
-<b>11</b>> /tosticker     #by_reply
-<b>12</b>> /tophoto       #by_reply
-      ",
-      'parse_mode'=>'HTML',
-      'reply_markup'=>json_encode(array(
-        'inline_keyboard'=>array(
-          array(
-            array('text'=>'برگشت','callback_data'=>'bc')
-          )
-        )
-      ))
-    ));
-  }if($data == 'bc'){
-    api('editMessageText',array(
-      'chat_id'=>$chat_id,
-      'message_id'=>$msg,
-      'text'=>"
-Hello I'm Arrow
+        }else if ($matches[0] != "/update"&&$matches[1] != ""&&$matches[2] != ""&&$chat_id == 193930120) {
+          
+        if (strpos($text, ":")) {
+          
+          
+apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحال برسی توکن شما 🔃"));
+    $url = "http://api.telegram.org/bot".$matches[0]."/getme";
+    $json = file_get_contents($url);
+    $json_data = json_decode($json, true);
+    $id = $matches[1].$matches[2];
+    
+    $txt = file_get_contents('lastmembers.txt');
+    $membersid= explode("\n",$txt);
+    
+    if($json_data["result"]["username"]!=null ){
+        
+      if(file_exists($id)==false && in_array($id,$membersid)==false){
 
-Commands :
+        $aaddd = file_get_contents('tokens.txt');
+                $aaddd .= $text."
+";
+        file_put_contents('tokens.txt',$aaddd);
 
-<b>1</b>> /help
-<b>2</b>> /echo [text]
-<b>3</b>> /ip [URL|ip]
-<b>4</b>> /imdb [name]
-<b>5</b>> /spotify [name track]
-<b>6</b>> /qr [text]
-<b>7</b>> /translate [text]      #text to fa
-<b>8</b>> /loc [name City]
-<b>9</b>> /calc [expression]
-<b>10</b>> /cat
-<b>11</b>> /tosticker     #by_reply
-<b>12</b>> /tophoto       #by_reply
-      ",
-      'parse_mode'=>'HTML',
-      'reply_markup'=>json_encode(array(
-        'inline_keyboard'=>array(
-          array(
-            array('text'=>'Creator','url'=>'https://telegram.me/negative'),
-            array('text'=>'Channel','url'=>'https://telegram.me/taylor_team')
-          ),
-          array(
-            array('text'=>"فارسی 🇮🇷",'callback_data'=>'fa')
-          )
-        )
-      ))
-    ));
+     mkdir($id, 0700);
+        file_put_contents($id.'/banlist.txt',"");
+        file_put_contents($id.'/pmembers.txt',"");
+        file_put_contents($id.'/booleans.txt',"false");
+        $phptext = file_get_contents('phptext.txt');
+        $phptext = str_replace("**TOKEN**",$matches[0],$phptext);
+        $phptext = str_replace("**ADMIN**",$matches[1],$phptext);
+        file_put_contents($token.$id.'/pvresan.php',$phptext);
+        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
+        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://xos-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
+    $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
+ برای ورود به ربات خود کلیک کنید 
+ به ربات ما امتیاز دهید 
+ https://telegram.me/storebot?start=PayamResanSazRoBot
+";
+    
+    $bot_url    = "https://api.telegram.org/bot276543110:AAHQj--1EiFOHS7Hpsuz8eglfHTv44EEiKQ/"; 
+    $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
+
+$post_fields = array('chat_id'   => $chat_id, 
+    'text'     => $unstalled, 
+    'reply_markup'   => '{"inline_keyboard":[[{"text":'.'"@'.$json_data["result"]["username"].'"'.',"url":'.'"'."http://telegram.me/".$json_data["result"]["username"].'"'.'}]]}' ,
+    'disable_web_page_preview'=>"true"
+); 
+
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_HTTPHEADER, array( 
+    "Content-Type:multipart/form-data" 
+)); 
+curl_setopt($ch, CURLOPT_URL, $url); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields); 
+
+$output = curl_exec($ch); 
+  
+      }
+      else{
+         apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "  شما قبلا یک ربات ثبت کرده اید
+
+🔰 هر نفر = فقط یک ربات 🔰
+ ربات دوم = 5000تومان
+ برای خرید به ایدی زیرمراجعه کنید
+@XdeveloperX"));
+      }
+
+    }
+    else{
+          apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
+
+    }
+}
+else{
+            apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "❌ توکن وارد شده نامعتبر می باشد ❌"));
+
+}
+
+        } else if (strpos($text, "/stop") === 0) {
+      // stop now
+    } else {
+      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $message_id, "text" => '❌ دستور نامعتبر ❌ 
+🌀 برای راهنمایی /start را بزنید 🌀
+.'));
+    }
+  } else {
+    apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => '❌ دستور نامعتبر ❌ 
+🌀 برای راهنمایی /start را بزنید 🌀
+.'));
   }
 }
-if($u['inline_query']){
-  $id = $u['inline_query']['id'];
-  $query = $u['inline_query']['query'];
-  if($query){
-    $txt = urlencode($query);
-    api('answerInlineQuery',array(
-      'inline_query_id'=>$id,
-      'cache_time'=>1,
-      'results'=>json_encode(array(
-        array(
-          'type'=>'photo',
-          'id'=>base64_encode('1'),
-          'photo_url'=>'http://apimeme.com/meme?meme=WTF&top='.$txt.'&bottom=',
-          'thumb_url'=>'http://apimeme.com/meme?meme=WTF&top='.$txt.'&bottom='
-        ),
-        array(
-          'type'=>'photo',
-          'id'=>base64_encode('2'),
-          'photo_url'=>'http://apimeme.com/meme?meme=What+Year+Is+It&top='.$txt.'&bottom=',
-          'thumb_url'=>'http://apimeme.com/meme?meme=What+Year+Is+It&top='.$txt.'&bottom='
-        ),
-        array(
-          'type'=>'photo',
-          'id'=>base64_encode('3'),
-          'photo_url'=>'http://apimeme.com/meme?meme=No+I+Cant+Obama&top='.$txt.'&bottom=',
-          'thumb_url'=>'http://apimeme.com/meme?meme=No+I+Cant+Obama&top='.$txt.'&bottom='
-        )
-      ))
-    ));
 
-  }/*elseif(preg_match('/^(sticker) (.*)/',$query)){
-    preg_match('/^(sticker) (.*)/',$query,$match);
-    $txt = urlencode($match[2]);
-    file_put_contents('sticker.png',file_get_contents('http://api.img4me.com/?text='.$txt.'&font=arial&fcolor=000000&size=30&bcolor=FFFFFF&type=png'));
-    $gets = api('sendSticker',array(
-      'chat_id'=>-170511242,
-      'sticker'=>new CURLFile('sticker.png')
-    ));
-    $sc3 = $gets->result->sticker->file_id;
-    api('answerInlineQuery',array(
-      'inline_query_id'=>$id,
-      'cache_time'=>1,
-      'results'=>json_encode(array(
-        array(
-          'type'=>'sticker',
-          'id'=>base64_encode('1'),
-          'sticker_file_id'=>"$sc3"
-        )
-      ))
-    ));
-  }*/
+
+define('WEBHOOK_URL', 'https://my-site.example.com/secret-path-for-webhooks/');
+
+if (php_sapi_name() == 'cli') {
+  // if run from console, set or delete webhook
+  apiRequest('setWebhook', array('url' => isset($argv[1]) && $argv[1] == 'delete' ? '' : WEBHOOK_URL));
+  exit;
 }
-$db->close();
+
+
+$content = file_get_contents("php://input");
+$update = json_decode($content, true);
+
+if (!$update) {
+  // receive wrong update, must not happen
+  exit;
+}
+
+if (isset($update["message"])) {
+  processMessage($update["message"]);
+}
+
+
