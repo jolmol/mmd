@@ -145,8 +145,7 @@ function processMessage($message) {
 به من امتياز بده ⭐️ (https://telegram.me/storebot?start=PmResan_Rbot)
 
 کانال پشتیبانی 📢 (https://telegram.me/joinchat/CgbG0D8Xz4hkgPCXeZcD0g)
-🔰 @PmResan
-🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
+🔰 @PmResan',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
 $txxt = file_get_contents('pmembers.txt');
