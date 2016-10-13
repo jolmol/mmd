@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M');
+define('BOT_TOKEN', '209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 function apiRequestWebhook($method, $parameters) {
@@ -124,21 +124,21 @@ function processMessage($message) {
     $matches = explode(' ', $text);
     $substr = substr($text, 0,7 );
     if (strpos($text, "/start") === 0) {
-        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'خوش امدید 😃👋
+        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'سلام 😃👋
 
- برای ساخت ربات پیام رسان توکن ربات خود را از @botfather دریافت کرده و آن را برای ما ارسال کنید. 
+🔹🔶برای ساخت ربات پیام رسان خود  توکن ربات خود را از @botfather دریافت کرده و آن را ارسال کنید. 😎
 
 به عنوان مثال :
-`123456789:ABCDE1FGHIJ5KLMNO5PQRS`
+123456789:ABCDE1FGHIJ5KLMNO5PQRS
 
 
-به ربات ما امتیاز دهید  👈        [PvResan](https://telegram.me/storebot?start=PvResan_RBot) 👉
+کانال ما  👈        PmResan_RBot (https://telegram.me/joinchat/CgbG0D8Xz4hkgPCXeZcD0g)
 
- 
-🔰 هر نفر = فقط یک ربات 🔰
- ربات دوم = 5000تومان
- برای خرید به ایدی زیرمراجعه کنید
-@instaService
+🔹هر نفر = دو ربات ✖️
+🔸ربات دوم =رایگان ✔️
+برای ساخت ربات دوم به ربات زیر مراجعه فرمایید 👇
+🤖 @PmResan_Rbot
+👉 @PmResan
 🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
@@ -188,7 +188,7 @@ Copy Right 2016©","parse_mode"=>"html"));
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[1].'$texttwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
 apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🚀 ربات با مـوفقیت آپدیت شد ♻️"));
 
 
@@ -224,14 +224,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
  https://telegram.me/storebot?start=PvResan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
@@ -307,14 +307,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$matches[1],$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
  https://telegram.me/storebot?start=Pvresan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
