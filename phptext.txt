@@ -549,8 +549,7 @@ else if ($chat_id == $admin && $booleans[0] == "true") {
         
       if($chat_id!=$admin){
       apiRequest("sendMessage", array('chat_id' => $chat_id,"text"=>$pmembersiddd[0] ,"parse_mode"=>"HTML"));
- apiRequest("sendMessage", array('chat_id' => $chat_id,"text"=> '[- چت شروع شد
-پیام خود را بفرستید](telegram.me/SudoPv_Bot)' ,"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
+ apiRequest("sendMessage", array('chat_id' => $chat_id,"text"=> '[پیامرسان خودرابسازید](telegram.me/pvresan_rbot)' ,"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 $txxt = file_get_contents('pmembers.txt');
 $pmembersid= explode("\n",$txxt);
@@ -566,7 +565,7 @@ if($chat_id==$admin){
   apiRequestJson("sendMessage", array('chat_id' => $chat_id, "text" => '✌ با سلام خوش اومدید✌
 ⚙ برای پاسخ پیام مورد نظر را ریپلای کنید و متن یا فایل خود را بفرستید ⚙ 
 🔰 برای آشنایی با دکمه ها ⚓️ Help️ را بزنید 🔰
-❤️ با تشکر ❤️
+
 .',"parse_mode"=>"MARKDOWN", 'reply_markup' => array(
         'keyboard' => array(array('🗣 Send To All'),array('⚓️ Help','👥 Members','❌ Blocked Users'),array("Settings ⚙")),
         'one_time_keyboard' => true,
@@ -731,7 +730,7 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => $pmembersiddd[1
     		apiRequestJson("sendMessage", array('chat_id' => $chat_id, "text" => '✌ با سلام خوش اومدید✌
 ⚙ برای پاسخ پیام مورد نظر را ریپلای کنید و متن یا فایل خود را بفرستید ⚙ 
 🔰 برای آشنایی با دکمه ها ⚓️ Help️ را بزنید 🔰
-❤️ با تشکر ❤️
+
 .', 'reply_markup' => array(
         'keyboard' => array(array('🗣 Send To All'),array('⚓️ Help','👥 Members','❌ Blocked Users'),array("Settings ⚙")),
         'one_time_keyboard' => true,
