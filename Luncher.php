@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w');
+define('BOT_TOKEN', '209166752:AAH3YvUF31PaCmGqYpr4xaxDKcJXnrOrgng');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 function apiRequestWebhook($method, $parameters) {
@@ -124,21 +124,28 @@ function processMessage($message) {
     $matches = explode(' ', $text);
     $substr = substr($text, 0,7 );
     if (strpos($text, "/start") === 0) {
-        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'سلام 😃👋
+        apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'سلام 👋
+🔸ريپورت شدي و ميخواي از اين عمل رها بشي؟ 😔
+🔶 دوستات ميخوان بيان پي ويت ولي ريپورت هستن؟ 🤒
 
-🔹🔶برای ساخت ربات پیام رسان خود  توکن ربات خود را از @botfather دریافت کرده و آن را ارسال کنید. 😎
+ديگه نگران نباش 😃‌ , من ميتوانم واست يك ربات پيام رسان بسازم تا دوستات بتونن بهت پيام بدن . 😇
 
-به عنوان مثال :
-123456789:ABCDE1FGHIJ5KLMNO5PQRS
+فقط كافيه يك ربات تو @BotFather بسازي و توكنش رو به من بدي . 😊
+💡بلد نيستي ربات بسازي؟ , 👈 @Create_Your_Rbot
+📌 توكن به عنوان مثال :
+123456789:hiAjPlaUndhkQplmzueTbpwsH_Gghadahfa
+
+بعد من به شما پيغامي ميدم كه ربات شما ساخته شد , بعد اون به رباتتون رفته دستور /start را ارسال كنيد ❤️👍
+
+🔹 ربات اول : رايگان
+🔷 ربات دوم : برای ساخت ربات دوم به ربات زیر مراجعه فرمایید⬇️
+@PmResan_Rbot
 
 
-کانال ما  👈        PmResan_RBot (https://telegram.me/joinchat/CgbG0D8Xz4hkgPCXeZcD0g)
+به من امتياز بده ⭐️ (https://telegram.me/storebot?start=PmResan_Rbot)
 
-🔹هر نفر = دو ربات ✖️
-🔸ربات دوم =رایگان ✔️
-برای ساخت ربات دوم به ربات زیر مراجعه فرمایید 👇
-🤖 @PmResan_Rbot
-👉 @PmResan
+کانال پشتیبانی 📢 (https://telegram.me/joinchat/CgbG0D8Xz4hkgPCXeZcD0g)
+🔰 @PmResan
 🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
@@ -188,7 +195,7 @@ Copy Right 2016©","parse_mode"=>"html"));
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[1].'$texttwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvs-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
 apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🚀 ربات با مـوفقیت آپدیت شد ♻️"));
 
 
@@ -224,14 +231,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvs-pmresanrobot.rhcloud.com/'.$chat_id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
  https://telegram.me/storebot?start=PvResan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAH3YvUF31PaCmGqYpr4xaxDKcJXnrOrgng/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
@@ -307,14 +314,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$matches[1],$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvsa-pmresanrobot.rhcloud.com/'.$id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvs-pmresanrobot.rhcloud.com/'.$id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
  https://telegram.me/storebot?start=Pvresan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot209166752:AAFVU806yi5q41jnuKkRVrwaUXIYo7QwU_w/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAH3YvUF31PaCmGqYpr4xaxDKcJXnrOrgng/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
