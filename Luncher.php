@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '284008451:AAFQUC2Jqcn-VokqmGV43ZkIowojdC3IPpU');
+define('BOT_TOKEN', '209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 function apiRequestWebhook($method, $parameters) {
@@ -120,7 +120,7 @@ function processMessage($message) {
   if (isset($message['text'])) {
     // incoming text message
     $text = $message['text'];
-    $admin = 193930120;
+    $admin = 180766841;
     $matches = explode(' ', $text);
     $substr = substr($text, 0,7 );
     if (strpos($text, "/start") === 0) {
@@ -132,13 +132,13 @@ function processMessage($message) {
 `123456789:ABCDE1FGHIJ5KLMNO5PQRS`
 
 
-به ربات ما امتیاز دهید  👈        [PayamResanSaz](https://telegram.me/storebot?start=PayamResanSazRoBot) 👉
+به ربات ما امتیاز دهید  👈        [PvResan](https://telegram.me/storebot?start=PvResan_RBot) 👉
 
  
 🔰 هر نفر = فقط یک ربات 🔰
  ربات دوم = 5000تومان
  برای خرید به ایدی زیرمراجعه کنید
-@XdeveloperX
+@instaService
 🤖 ',"parse_mode"=>"MARKDOWN","disable_web_page_preview"=>"true"));
 
 
@@ -150,7 +150,7 @@ $pmembersid= explode("\n",$txxt);
 ";
     	file_put_contents('pmembers.txt',$aaddd);
 }
-        if($chat_id == 193930120)
+        if($chat_id == 180766841)
         {
           if(!file_exists('tokens.txt')){
         file_put_contents('tokens.txt',"");
@@ -163,7 +163,7 @@ $pmembersid= explode("\n",$txxt);
 
         }
     }else if ($text == "Version") {
-      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>PayamResanSaz</b>
+      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "<b>PvResan_RBot</b>
 <b>ver 1.0</b>
 <code>Coded By</code> @XdeveloperX
 Copy Right 2016©","parse_mode"=>"html"));
@@ -188,13 +188,13 @@ Copy Right 2016©","parse_mode"=>"html"));
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[1].'$texttwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvs0-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[1].'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
 apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🚀 ربات با مـوفقیت آپدیت شد ♻️"));
 
 
     }
     }
-    else if ($matches[0] != "/update"&& $matches[1]==""&&$chat_id != 193930120) {
+    else if ($matches[0] != "/update"&& $matches[1]==""&&$chat_id != 180766841) {
       if (strpos($text, ":")) {
 apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحال برسی توکن شما 🔃"));
     $url = "http://api.telegram.org/bot".$matches[0]."/getme";
@@ -224,14 +224,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$chat_id,$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvs0-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$text.'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$chat_id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
- https://telegram.me/storebot?start=PayamResanSazRoBot
+ https://telegram.me/storebot?start=PvResan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot284008451:AAFQUC2Jqcn-VokqmGV43ZkIowojdC3IPpU/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
@@ -262,7 +262,7 @@ $output = curl_exec($ch);
 🔰 هر نفر = فقط یک ربات 🔰
  ربات دوم = 5000تومان
  برای خرید به ایدی زیرمراجعه کنید
-@XdeveloperX"));
+@instaService"));
       }
     }
       
@@ -275,7 +275,7 @@ else{
 
 }
 
-        }else if ($matches[0] != "/update"&&$matches[1] != ""&&$matches[2] != ""&&$chat_id == 193930120) {
+        }else if ($matches[0] != "/update"&&$matches[1] != ""&&$matches[2] != ""&&$chat_id == 180766841) {
           
         if (strpos($text, ":")) {
           
@@ -307,14 +307,14 @@ apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => "🔃 درحا�
         $phptext = str_replace("**ADMIN**",$matches[1],$phptext);
         file_put_contents($token.$id.'/pvresan.php',$phptext);
         file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=');
-        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvs0-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
+        file_get_contents('https://api.telegram.org/bot'.$matches[0].'/setwebhook?url=https://pvsa-resanmmm.rhcloud.com/'.$id.'/pvresan.php');
     $unstalled = "🔰 ربات شما با موفقیت نصب شد 🔰 
  برای ورود به ربات خود کلیک کنید 
  به ربات ما امتیاز دهید 
- https://telegram.me/storebot?start=PayamResanSazRoBot
+ https://telegram.me/storebot?start=Pvresan_RBot
 ";
     
-    $bot_url    = "https://api.telegram.org/bot284008451:AAFQUC2Jqcn-VokqmGV43ZkIowojdC3IPpU/"; 
+    $bot_url    = "https://api.telegram.org/bot209166752:AAGgb_ixXeti1-8E3FR5PLsuTGpaXLZIl2M/"; 
     $url        = $bot_url . "sendMessage?chat_id=" . $chat_id ; 
 
 $post_fields = array('chat_id'   => $chat_id, 
@@ -340,7 +340,7 @@ $output = curl_exec($ch);
 🔰 هر نفر = فقط یک ربات 🔰
  ربات دوم = 5000تومان
  برای خرید به ایدی زیرمراجعه کنید
-@XdeveloperX"));
+@instaService"));
       }
 
     }
